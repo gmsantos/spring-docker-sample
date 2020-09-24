@@ -1,0 +1,21 @@
+version: '3.4'
+
+services:
+  demo:
+    image: demo
+    build: .
+    ports:
+      - 8080:8080
+      
+  mvn:
+    image: maven:alpine
+    entrypoint: mvn
+    command: install -DskipTests
+    volumes:
+      - .:/usr/src/app
+      - mvn-deps:/root/.m2
+    working_dir: /usr/src/app
+
+volumes:
+  mvn-deps:
+    driver: local
